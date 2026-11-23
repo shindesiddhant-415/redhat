@@ -1,156 +1,136 @@
-## **Fil management
-
-
-| `head -5 file` | Display first five lines |
-
-| `tail -3 file` | Display last three lines |
-
-| `cp source destination` | Copy a file |
-
-| `yy` | Copy a line in Vim |
-
-| `p` | Paste a copied line |
-
-| `dd` | Delete a line |
-
-| `ln source link` | Create a hard link |
-
-| `ln -s source link` | Create a symbolic link |
-
-| `ls -l` | Display long listing |
-
-
-
-## **Users and groups**
-
-
-
-| Command | Purpose |
-
-| --- | --- |
-
-| `groupadd -g 50000 database` | Create a group with a specified GID |
-
-| `useradd -G database dbadmin1` | Create user with supplementary group |
-
-| `passwd dbadmin1` | Set user password |
-
-| `chage -d 0 dbadmin1` | Force password change |
-
-| `chage -m 10 dbadmin1` | Set minimum password age |
-
-| `chage -M 30 dbadmin1` | Set maximum password age |
-
-| `su - dbadmin1` | Switch to user |
-
-| `sudo -i` | Open root login shell |
-
-| `chown :database review2` | Change group ownership |
-
-| `chmod g=rwx review2` | Give group full access |
-
-| `chmod o+t review2` | Set sticky bit |
-
-| `chmod g+s review2` | Set setgid bit |
-
-| `chmod o+rx review2` | Give others read and execute |
-
-| `umask 007` | Configure default permission mask |
-
-
-
-## **Process management**
-
-
-
-| Command / key | Purpose |
-
-| --- | --- |
-
-| `top` | Monitor processes |
-
-| `k` inside `top` | Send a signal to a process |
-
-| `15` / `SIGTERM` | Request graceful termination |
-
-| `q` inside `top` | Quit `top` |
-
-
-
-## **SSH and packages**
-
-
-
-| Command | Purpose |
-
-| --- | --- |
-
-| `ssh student@serverb` | Connect to remote server |
-
-| `ssh-keygen` | Generate SSH key pair |
-
-| `ssh-copy-id -i key.pub user@host` | Install public key remotely |
-
-| `ssh -i key user@host` | Connect using a specific private key |
-
-| `systemctl reload sshd.service` | Reload SSH service |
-
-| `dnf install zsh` | Install zsh package |
-
-
-
-## **Networking**
-
-
-
-| Command | Purpose |
-
-| --- | --- |
-
-| `nmcli device status` | Show network device status |
-
-| `nmcli connection show` | Show connection profiles |
-
-| `nmcli connection add` | Create a connection |
-
-| `nmcli connection modify` | Modify a connection |
-
-| `nmcli connection up` | Activate a connection |
-
-| `hostnamectl hostname NAME` | Set hostname |
-
-| `hostname` | Display hostname |
-
-| `ping -c2 IP` | Send two connectivity test packets |
-
-
-
-## **File systems and searching**
-
-
-
-| Command | Purpose |
-
-| --- | --- |
-
-| `lsblk -fs` | Display block devices and file systems |
-
-| `mkdir /mountpoint` | Create mount point |
-
-| `mount DEVICE MOUNTPOINT` | Mount a file system |
-
-| `df -Th` | Display file-system usage and type |
-
-| `find / -iname filename` | Search by name, ignoring case |
-
-| `find / -user USER` | Search by owner |
-
-| `find / -group GROUP` | Search by group |
-
-| `find / -perm 640` | Search by exact permissions |
-
-| `find / -type f` | Search regular files |
-
-| `find / -size 100c` | Search files of exactly 100 bytes |
-
-| `2>/dev/null` | Discard error messages |
+## File Management
+
+head -5 file                 : Display first five lines
+tail -3 file                 : Display last three lines
+cp source destination        : Copy a file
+yy                           : Copy a line in Vim
+p                            : Paste a copied line
+dd                           : Delete a line
+ln source link               : Create a hard link
+ln -s source link            : Create a symbolic link
+ls -l                        : Display long listing
+
+
+## Users and Groups
+
+groupadd -g 50000 database   : Create a group with a specified GID
+useradd -G database dbadmin1 : Create user with supplementary group
+passwd dbadmin1              : Set user password
+chage -d 0 dbadmin1          : Force password change
+chage -m 10 dbadmin1         : Set minimum password age
+chage -M 30 dbadmin1         : Set maximum password age
+su - dbadmin1                : Switch to user
+sudo -i                      : Open root login shell
+chown :database review2      : Change group ownership
+chmod g=rwx review2          : Give group full access
+chmod o+t review2            : Set sticky bit
+chmod g+s review2            : Set setgid bit
+chmod o+rx review2           : Give others read and execute
+umask 007                    : Configure default permission mask
+
+##Permissions
+
+chmod 755 file              : Set owner rwx, group r-x, others r-x
+chmod 644 file              : Set owner rw-, group r--, others r--
+chmod u+x file              : Add execute permission for owner
+chmod g+w file              : Add write permission for group
+chmod -R 755 directory      : Change permissions recursively
+chown user file             : Change file owner
+chown user:group file       : Change owner and group
+chgrp group file            : Change group ownership
+umask                       : Display current permission mask
+
+
+## Process Management
+
+top                          : Monitor processes
+k (inside top)               : Send a signal to a process
+15 / SIGTERM                 : Request graceful termination
+ps                          : Display processes
+ps aux                      : Display detailed process list
+ps -ef                      : Display processes in full format
+ps -p PID                   : Display a specific process
+pgrep process               : Find process ID by name
+pkill process               : Send signal to matching processes
+kill PID                    : Send termination signal
+kill -15 PID                : Request graceful termination
+kill -9 PID                 : Forcefully terminate process
+jobs                        : Display background jobs
+sleep 100 &                 : Run process in background
+bg                          : Resume suspended job in background
+fg                          : Bring job to foreground
+uptime                      : Display system uptime
+
+##Services and Daemons
+
+systemctl status SERVICE       : Check service status
+systemctl start SERVICE        : Start service
+systemctl stop SERVICE         : Stop service
+systemctl restart SERVICE      : Restart service
+systemctl enable SERVICE       : Enable service at boot
+systemctl disable SERVICE      : Disable service at boot
+systemctl enable --now SERVICE : Enable and start service
+systemctl is-active SERVICE    : Check whether service is active
+systemctl is-enabled SERVICE   : Check whether service is enabled
+systemctl --failed             : Display failed units
+systemctl list-units --type=service : List active services
+
+
+## SSH and Packages
+
+ssh student@serverb                    : Connect to remote server
+ssh-keygen                             : Generate SSH key pair
+ssh-copy-id -i key.pub user@host       : Install public key remotely
+ssh -i key user@host                   : Connect using a specific private key
+systemctl reload sshd.service          : Reload SSH service
+dnf install zsh                        : Install zsh package
+
+ssh-keygen -t ed25519       : Generate an Ed25519 SSH key pair
+ssh -v user@host            : Connect with verbose SSH output
+cat ~/.ssh/id_ed25519.pub  : Display public key
+systemctl status sshd       : Check SSH service status
+dnf search PACKAGE          : Search for a package
+dnf info PACKAGE            : Display package information
+dnf remove PACKAGE          : Remove a package
+dnf update                  : Update installed packages
+dnf list installed          : List installed packages
+rpm -q PACKAGE              : Check whether package is installed
+rpm -ql PACKAGE             : List files belonging to a package
+
+## Networking
+
+nmcli device status        : Show network device status
+nmcli connection show      : Show connection profiles
+nmcli connection add       : Create a connection
+nmcli connection modify    : Modify a connection
+nmcli connection up        : Activate a connection
+hostnamectl hostname NAME  : Set hostname
+hostname                   : Display hostname
+ping -c2 IP                : Send two connectivity test packets
+
+ip addr                     : Display IP addresses
+ip route                    : Display routing table
+nmcli device show           : Display network device details
+nmcli connection show --active : Display active connections
+nmcli connection modify PROFILE : Modify connection profile
+nmcli connection delete PROFILE : Delete connection profile
+nmcli connection down PROFILE   : Deactivate connection
+hostnamectl status          : Display hostname information
+cat /etc/hosts              : Display local hostname mappings
+cat /etc/resolv.conf        : Display DNS configuration
+getent hosts hostname       : Resolve hostname
+
+
+## File Systems and Searching
+
+lsblk -fs                  : Display block devices and file systems
+mkdir /mountpoint          : Create mount point
+mount DEVICE MOUNTPOINT    : Mount a file system
+df -Th                     : Display file-system usage and type
+find / -iname filename     : Search by name, ignoring case
+find / -user USER          : Search by owner
+find / -group GROUP        : Search by group
+find / -perm 640           : Search by exact permissions
+find / -type f             : Search regular files
+find / -size 100c          : Search files of exactly 100 bytes
+2>/dev/null                : Discard error messages
